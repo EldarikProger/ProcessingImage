@@ -74,6 +74,7 @@ namespace ready
         }
 
         Processing processing = new Processing();
+        ModifyProccesing modprocessing = new ModifyProccesing();
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
@@ -81,6 +82,8 @@ namespace ready
             float y = ((float)e.Y) / pictureBox1.Height * image.Height;
             processing.point = new Point((int)x,(int)y);
             processing.initContur();
+            modprocessing.point = new Point((int)x, (int)y);
+            modprocessing.initContur();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -152,5 +155,23 @@ namespace ready
         {
             image = newImage;
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            modprocessing.image = image;
+            modprocessing.startProcessing();
+            try
+            {
+                newImage = Draw.drawCounter(image, modprocessing.contur);
+            }
+            catch
+            {
+                MessageBox.Show("Файл не открыт!",
+                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            pictureBox1.Image = newImage;
+            pictureBox1.Invalidate();
+        }
+
     }
 }
